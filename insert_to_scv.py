@@ -1,16 +1,9 @@
 import scapy.all as scapy
 import numpy as np
 import pandas as pd
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.preprocessing import StandardScaler
-import joblib
 import os
 
-
-MODEL_FILE = "knn_model.pkl"
-SCALER_FILE = "scaler.pkl"
-TRAINING_CSV = "knn.csv"
-
+CSV = "knn.csv"
 LABEL_MAPPING = {
     "youtube": "YouTube",
     "spotify": "Spotify",
@@ -32,7 +25,7 @@ def determine_label(filename):
     for key, label in LABEL_MAPPING.items():
         if key in filename:
             return label
-    return "General"  # ברירת מחדל אם אין התאמה
+    return "General"
 
 def add_pcap_to_csv(pcap_file):
     features = extract_features(pcap_file)
@@ -47,7 +40,7 @@ def add_pcap_to_csv(pcap_file):
 
     # טעינת קובץ CSV אם קיים
     try:
-        df = pd.read_csv(TRAINING_CSV)
+        df = pd.read_csv(CSV)
     except (FileNotFoundError, pd.errors.EmptyDataError):
         df = pd.DataFrame(columns=["total_packets", "total_bytes", "avg_packet_size", "avg_inter_arrival", "label"])
 
@@ -55,7 +48,7 @@ def add_pcap_to_csv(pcap_file):
     df = pd.concat([df, new_data], ignore_index=True)
 
     # שמירת העדכון
-    df.to_csv(TRAINING_CSV, index=False)
-    print(f"Added {pcap_file} to {TRAINING_CSV}")
+    df.to_csv(CSV, index=False)
+    print(f"Added {pcap_file} to {CSV}")
 if __name__ == "__main__":
-    add_pcap_to_csv("Spotify(1).pcap")
+    add_pcap_to_csv("Spotify.pcap")

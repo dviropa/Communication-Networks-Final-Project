@@ -11,11 +11,6 @@ MODEL_FILE = "knn_model.pkl"
 SCALER_FILE = "scaler.pkl"
 TRAINING_CSV = "knn.csv"
 
-LABEL_MAPPING = {
-    "youtube": "YouTube",
-    "spotify": "Spotify",
-    "zoom": "Zoom"
-}
 # פונקציה לחילוץ תכונות מקובץ PCAP
 def extract_features(pcap_file):
     packets = scapy.rdpcap(pcap_file)
@@ -27,37 +22,6 @@ def extract_features(pcap_file):
     inter_arrival_times = np.diff(timestamps).astype(float) if len(timestamps) > 1 else [0.0]
     avg_inter_arrival = float(np.mean(inter_arrival_times)) if len(inter_arrival_times) > 0 else 0.0
     return [total_packets, total_bytes, avg_packet_size, avg_inter_arrival]
-
-def determine_label(filename):
-    filename = filename.lower()  # הופך את השם לאותיות קטנות כדי להימנע מהבדלים
-    for key, label in LABEL_MAPPING.items():
-        if key in filename:
-            return label
-    return "General"  # ברירת מחדל אם אין התאמה
-
-def add_pcap_to_csv(pcap_file):
-    features = extract_features(pcap_file)
-    if features is None:
-        print(f"failed to add {pcap_file} due to an error.")
-        return
-
-    label = determine_label(os.path.basename(pcap_file))
-
-    # יצירת DataFrame חדש
-    new_data = pd.DataFrame([features + [label]], columns=["total_packets", "total_bytes", "avg_packet_size", "avg_inter_arrival", "label"])
-
-    # טעינת קובץ CSV אם קיים
-    try:
-        df = pd.read_csv(TRAINING_CSV)
-    except (FileNotFoundError, pd.errors.EmptyDataError):
-        df = pd.DataFrame(columns=["total_packets", "total_bytes", "avg_packet_size", "avg_inter_arrival", "label"])
-
-    # הוספת הנתונים החדשים
-    df = pd.concat([df, new_data], ignore_index=True)
-
-    # שמירת העדכון
-    df.to_csv(TRAINING_CSV, index=False)
-    print(f"Added {pcap_file} to {TRAINING_CSV}")
 def __load_csv( filename):
     try:
         _=pd.read_csv(filename)
