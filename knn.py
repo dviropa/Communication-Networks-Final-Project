@@ -72,4 +72,4 @@ def predict_traffic(pcap_file):
 
 if __name__ == "__main__":
     train_model()
-    predict_traffic("Spotify.pcap")
+    predict_traffic("youtube.pcap")
