@@ -21,7 +21,7 @@ def extract_features(pcap_file):
     return [total_packets, total_bytes, avg_packet_size, avg_inter_arrival]
 
 def determine_label(filename):
-    filename = filename.lower()  # הופך את השם לאותיות קטנות כדי להימנע מהבדלים
+    filename = filename.lower()
     for key, label in LABEL_MAPPING.items():
         if key in filename:
             return label
@@ -35,19 +35,19 @@ def add_pcap_to_csv(pcap_file):
 
     label = determine_label(os.path.basename(pcap_file))
 
-    # יצירת DataFrame חדש
+
     new_data = pd.DataFrame([features + [label]], columns=["total_packets", "total_bytes", "avg_packet_size", "avg_inter_arrival", "label"])
 
-    # טעינת קובץ CSV אם קיים
+
     try:
         df = pd.read_csv(CSV)
     except (FileNotFoundError, pd.errors.EmptyDataError):
         df = pd.DataFrame(columns=["total_packets", "total_bytes", "avg_packet_size", "avg_inter_arrival", "label"])
 
-    # הוספת הנתונים החדשים
+
     df = pd.concat([df, new_data], ignore_index=True)
 
-    # שמירת העדכון
+
     df.to_csv(CSV, index=False)
     print(f"Added {pcap_file} to {CSV}")
 if __name__ == "__main__":

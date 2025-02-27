@@ -12,7 +12,7 @@ MODEL_FILE = "knn_model.pkl"
 SCALER_FILE = "scaler.pkl"
 TRAINING_CSV = "knn.csv"
 
-# פונקציה לחילוץ תכונות מקובץ PCAP
+# extract features from a PCAP file
 def extract_features(pcap_file):
     packets = scapy.rdpcap(pcap_file)
     total_packets = len(packets)
@@ -33,7 +33,6 @@ def __load_csv( filename):
 
 def train_model():
     df = __load_csv(TRAINING_CSV)
-
     if df.empty:
         print("Error: No training data available.")
         return
@@ -45,17 +44,21 @@ def train_model():
         print("Warning: NaN values detected in training data. Filling missing values with median.")
         X = X.fillna(X.median())  # Replace NaN with median values
 
+    #data normalization
     scaler = StandardScaler()
     X_scaled = scaler.fit_transform(X)
 
+    #Creating and training  KNN model
     knn = KNeighborsClassifier(n_neighbors=3)
     knn.fit(X_scaled, y)
 
+    #Saving the model and scaler for future use
     joblib.dump(knn, MODEL_FILE)
     joblib.dump(scaler, SCALER_FILE)
     print("Model trained and saved.")
 
 def predict_traffic(pcap_file):
+    #Loading the model and scaler from disk
     knn, scaler = joblib.load(MODEL_FILE), joblib.load(SCALER_FILE)
 
     features = extract_features(pcap_file)
@@ -66,7 +69,7 @@ def predict_traffic(pcap_file):
     print(f"Predicted Traffic Type: {prediction[0]}")
 
 
-# ריצה ראשונית
+
 if __name__ == "__main__":
     train_model()
     predict_traffic("Spotify.pcap")
