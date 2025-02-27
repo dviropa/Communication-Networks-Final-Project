@@ -104,4 +104,4 @@ def predict_traffic(pcap_file):
 # ריצה ראשונית
 if __name__ == "__main__":
     train_model()
-    predict_traffic("Spotify(2).pcap")
+    predict_traffic("Spotify.pcap")
