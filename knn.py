@@ -7,6 +7,7 @@ import joblib
 import os
 
 
+
 MODEL_FILE = "knn_model.pkl"
 SCALER_FILE = "scaler.pkl"
 TRAINING_CSV = "knn.csv"
