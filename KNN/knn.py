@@ -4,7 +4,6 @@ import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
 import joblib
-import os
 
 
 
