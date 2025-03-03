@@ -54,6 +54,9 @@ pip install numpy
 pip install scapy
 ```
 ```bash
+pip install sklearn
+```
+```bash
 pip install scikit-learn
 ```
 ```bash
