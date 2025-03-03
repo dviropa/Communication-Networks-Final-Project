@@ -1,7 +1,6 @@
 # README - Communication Networks final project
 
-#############333 חשוב מאוד לעדכן שזה רץ בלינוקס וגם לעדכן על איזה גרסאות, להוסיף עוד מידה רלוונטי?
-לציין לפי התיקיות - איפה נמצא הגרפים של הבונוס (יש גם יופיטר נוטבוק חדש וגם בגרפים של כל הפלוטים עצמם נמצא)
+note: this project runs on both windows and ubuntu.
 
 ## Project Description
 This project focuses on analyzing data from various sources using statistical analysis algorithms and graphical visualizations. 
