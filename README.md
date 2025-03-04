@@ -5,7 +5,8 @@ note: this project runs on both windows and ubuntu.
 ## Project Description
 This project focuses on analyzing data from various sources using statistical analysis algorithms and graphical visualizations. 
 The CSV files contain collected data, which is analyzed using Jupyter Notebook.
-
+CSV files were used for graph export and the pcap files recordings were used for the Knn model on an Ubuntu computer.
+It is important to note that we exported the CSV files from Wishark, except for the knn.pcap file, into which we insert information via "insert_to_csv.py".
 ## Main Files and Directories
 - **CSV Files**: Contain the collected data
   - `bonus.csv`
@@ -17,7 +18,15 @@ The CSV files contain collected data, which is analyzed using Jupyter Notebook.
   - `YouTube_240.csv`
   - `YouTube_720.csv`
   - `zoom.csv`
+  - `knn.csv`
+  - **pcap Files**: Contain the collected data
+  - `bonus.pcap`
+  - `chrome.pcap`
+  - `Spotify.pcap`
+  - `YouTube.pcap`
+  - `zoom.pcap`
 - **KNN/**: Directory containing the implementation of the KNN algorithm
+-  `knn.csv`:Contains additional recordings for the model
 - **plotAll.ipynb**: Jupyter Notebook for data visualization
 - **bonus.ipynb**: Additional Jupyter Notebook for extended analysis
 - **.venv/**: Virtual environment for the project
